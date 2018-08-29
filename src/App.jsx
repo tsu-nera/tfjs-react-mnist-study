@@ -4,6 +4,7 @@ import * as tf from "@tensorflow/tfjs";
 import SignaturePad from "react-signature-pad-wrapper";
 import "bulma/css/bulma.css";
 import PredictButton from "./components/PredictButton";
+import AccuracyTable from "./components/AccuracyTable";
 
 class App extends React.Component {
   constructor() {
@@ -142,76 +143,7 @@ class App extends React.Component {
             </div>
           </div>
           <div className="column is-3">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Number</th>
-                  <th>Accuracy</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>0</th>
-                  <td className="accuracy" data-row-index="0">
-                    -
-                  </td>
-                </tr>
-                <tr>
-                  <th>1</th>
-                  <td className="accuracy" data-row-index="1">
-                    -
-                  </td>
-                </tr>
-                <tr>
-                  <th>2</th>
-                  <td className="accuracy" data-row-index="2">
-                    -
-                  </td>
-                </tr>
-                <tr>
-                  <th>3</th>
-                  <td className="accuracy" data-row-index="3">
-                    -
-                  </td>
-                </tr>
-                <tr>
-                  <th>4</th>
-                  <td className="accuracy" data-row-index="4">
-                    -
-                  </td>
-                </tr>
-                <tr>
-                  <th>5</th>
-                  <td className="accuracy" data-row-index="5">
-                    -
-                  </td>
-                </tr>
-                <tr>
-                  <th>6</th>
-                  <td className="accuracy" data-row-index="6">
-                    -
-                  </td>
-                </tr>
-                <tr>
-                  <th>7</th>
-                  <td className="accuracy" data-row-index="7">
-                    -
-                  </td>
-                </tr>
-                <tr>
-                  <th>8</th>
-                  <td className="accuracy" data-row-index="8">
-                    -
-                  </td>
-                </tr>
-                <tr>
-                  <th>9</th>
-                  <td className="accuracy" data-row-index="9">
-                    -
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <AccuracyTable />
           </div>
         </div>
       </div>
