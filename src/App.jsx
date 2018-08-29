@@ -4,6 +4,7 @@ import * as tf from "@tensorflow/tfjs";
 import SignaturePad from "react-signature-pad-wrapper";
 import "bulma/css/bulma.css";
 import PredictButton from "./components/PredictButton";
+import ResetButton from "./components/ResetButton";
 import AccuracyTable from "./components/AccuracyTable";
 
 class App extends React.Component {
@@ -129,17 +130,12 @@ class App extends React.Component {
               }}
             />
             <div className="field is-grouped">
-              <p className="control">
-                <PredictButton
-                  isLoading={this.state.is_loading}
-                  predict={this.predict}
-                />
-              </p>
-              <p className="control">
-                <a className="button" onClick={this.reset}>
-                  Reset
-                </a>
-              </p>
+              <PredictButton
+                className="control"
+                isLoading={this.state.is_loading}
+                predict={this.predict}
+              />
+              <ResetButton className="control" reset={this.reset} />
             </div>
           </div>
           <div className="column is-3">
