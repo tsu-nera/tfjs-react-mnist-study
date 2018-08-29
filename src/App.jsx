@@ -3,7 +3,6 @@ import "./App.css";
 import * as tf from "@tensorflow/tfjs";
 import SignaturePad from "react-signature-pad-wrapper";
 import "bulma/css/bulma.css";
-import Jimp from "jimp";
 import PredictButton from "./components/PredictButton";
 
 class App extends React.Component {
@@ -22,7 +21,7 @@ class App extends React.Component {
 
   componentDidMount() {
     tf.loadModel(
-      "https://raw.githubusercontent.com/yukagil/tfjs-mnist-cnn/master/model/model.json"
+      "https://raw.githubusercontent.com/tsu-nera/tfjs-mnist-study/master/model/model.json"
     ).then(model => {
       this.setState({
         is_loading: "",
@@ -53,30 +52,60 @@ class App extends React.Component {
   }
 
   getImageData() {
-    const data = this.signaturePad.toDataURL();
-    console.log(data);
-  }
+    return new Promise(resolve => {
+      const context = document.createElement("canvas").getContext("2d");
 
-  predict() {
-    const imageData = this.getImageData();
-    const accuracyScores = this.getAccuracyScores(imageData);
-    const maxAccuracy = accuracyScores.indexOf(
-      Math.max.apply(null, accuracyScores)
-    );
+      const image = new Image();
+      const width = 28;
+      const height = 28;
 
-    const elements = document.querySelectorAll(".accuracy");
-    elements.forEach(el => {
-      el.parentNode.classList.remove("is-selected");
-      const rowIndex = Number(el.dataset.rowIndex);
-      if (maxAccuracy === rowIndex) {
-        el.parentNode.classList.add("is-selected");
-      }
-      el.innerText = accuracyScores[rowIndex];
+      image.onload = () => {
+        context.drawImage(image, 0, 0, width, height);
+        const imageData = context.getImageData(0, 0, width, height);
+
+        for (let i = 0; i < imageData.data.length; i += 4) {
+          const avg =
+            (imageData.data[i] +
+              imageData.data[i + 1] +
+              imageData.data[i + 2]) /
+            3;
+          imageData.data[i] = avg;
+          imageData.data[i + 1] = avg;
+          imageData.data[i + 2] = avg;
+        }
+        resolve(imageData);
+      };
+
+      image.src = this.signaturePad.toDataURL();
     });
   }
 
+  predict() {
+    this.getImageData()
+      .then(imageData => this.getAccuracyScores(imageData))
+      .then(accuracyScores => {
+        const maxAccuracy = accuracyScores.indexOf(
+          Math.max.apply(null, accuracyScores)
+        );
+        const elements = document.querySelectorAll(".accuracy");
+        elements.forEach(el => {
+          el.parentNode.classList.remove("is-selected");
+          const rowIndex = Number(el.dataset.rowIndex);
+          if (maxAccuracy === rowIndex) {
+            el.parentNode.classList.add("is-selected");
+          }
+          el.innerText = accuracyScores[rowIndex];
+        });
+      });
+  }
+
   reset() {
-    this.signaturePad.clear();
+    this.signaturePad.instance.clear();
+    const elements = document.querySelectorAll(".accuracy");
+    elements.forEach(el => {
+      el.parentNode.classList.remove("is-selected");
+      el.innerText = "-";
+    });
   }
 
   render() {
@@ -91,7 +120,12 @@ class App extends React.Component {
               ref={this.onRef}
               width={280}
               height={280}
-              options={{ penColor: "white", backgroundColor: "black" }}
+              options={{
+                minWidth: 6,
+                maxWidth: 6,
+                penColor: "white",
+                backgroundColor: "black"
+              }}
             />
             <div className="field is-grouped">
               <p className="control">
