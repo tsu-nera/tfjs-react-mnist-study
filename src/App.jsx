@@ -3,6 +3,7 @@ import "./App.css";
 import * as tf from "@tensorflow/tfjs";
 import SignaturePad from "react-signature-pad-wrapper";
 import "bulma/css/bulma.css";
+import { BrowserView, MobileView } from "react-device-detect";
 import PredictButton from "./components/PredictButton";
 import ResetButton from "./components/ResetButton";
 import AccuracyTable from "./components/AccuracyTable";
@@ -118,17 +119,32 @@ class App extends React.Component {
         </h1>
         <div className="columns is-centered">
           <div className="column is-3">
-            <SignaturePad
-              ref={this.onRef}
-              width={280}
-              height={280}
-              options={{
-                minWidth: 6,
-                maxWidth: 6,
-                penColor: "white",
-                backgroundColor: "black"
-              }}
-            />
+            <BrowserView>
+              <SignaturePad
+                ref={this.onRef}
+                width={280}
+                height={280}
+                options={{
+                  minWidth: 6,
+                  maxWidth: 6,
+                  penColor: "white",
+                  backgroundColor: "black"
+                }}
+              />
+            </BrowserView>
+            <MobileView>
+              <SignaturePad
+                width={100}
+                height={100}
+                ref={this.onRef}
+                options={{
+                  minWidth: 6,
+                  maxWidth: 6,
+                  penColor: "white",
+                  backgroundColor: "black"
+                }}
+              />
+            </MobileView>
             <div className="field is-grouped">
               <PredictButton
                 className="control"
