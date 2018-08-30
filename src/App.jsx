@@ -117,11 +117,9 @@ class App extends React.Component {
           MNIST recognition with TensorFlow.js
         </h1>
         <div className="columns is-centered">
-          <div className="column is-narrow">
+          <div className="column is-3">
             <SignaturePad
               ref={this.onRef}
-              width={200}
-              height={200}
               options={{
                 minWidth: 6,
                 maxWidth: 6,
