@@ -120,6 +120,8 @@ class App extends React.Component {
           <div className="column is-3">
             <SignaturePad
               ref={this.onRef}
+              width={280}
+              height={280}
               options={{
                 minWidth: 6,
                 maxWidth: 6,
