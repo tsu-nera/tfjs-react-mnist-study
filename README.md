@@ -1,7 +1,7 @@
 Tensorflow.js mnist react
 ===
 
-![top](image: https://res.cloudinary.com/tsu-nera/image/upload/v1535610106/futurismo/posts/tjfs-mnist-react.png)
+![top](https://res.cloudinary.com/tsu-nera/image/upload/v1535610106/futurismo/posts/tjfs-mnist-react.png)
 
 A port of the Tensorflow.js MNIST example in React.
 
